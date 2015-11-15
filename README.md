@@ -1,6 +1,6 @@
 # fors
 
-> Conveniently create nested `for` loops.
+> Conveniently create nested [`for`](https://en.wikipedia.org/wiki/For_loop) loops in JavaScript.
 
 # Install
 
