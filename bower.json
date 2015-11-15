@@ -1,0 +1,25 @@
+{
+  "name": "fors",
+  "main": "fors.js",
+  "version": "0.0.1",
+  "homepage": "https://github.com/miguelmota/fors",
+  "authors": [
+    "Miguel Mota <hello@miguelmota.com>"
+  ],
+  "description": "Conveniently create nested `for` loops.",
+  "keywords": [
+    "control",
+    "statement",
+    "structure",
+    "for",
+    "loop"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "license": "MIT"
+}
