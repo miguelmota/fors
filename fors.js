@@ -1,43 +1,60 @@
-(function(root) {
+(function (root) {
   'use strict';
 
-  function fors(depth, max, callback, context) {
-    var numbers = [];
-    var min = 0;
+  function fors(loops, callback, context) {
+    var defaultFrom = 0;
+    var defaultTo = 9;
+    var numbers;
+    var min;
+    var max;
+    var lastLoop = loops.length - 1;
+    var i;
 
-    if (typeof max === 'function') {
-      callback = max;
-    }
+    var setFrom = function (loop) {
+      var fromUndefined = (typeof loop.from === 'undefined');
+      return fromUndefined ? defaultFrom : loop.from;
+    };
 
-    if (typeof max !== 'number') {
-      if (Array.isArray(max)) {
-        min = max[0];
-        max = max[1];
+    var setTo = function (loop) {
+      var toUndefined = (typeof loop.to === 'undefined');
+      return toUndefined ? defaultTo : loop.to;
+    };
+
+    min = loops.map(function (x) {
+      return setFrom(x);
+    });
+    numbers = min.map(function (x) {
+      return x;
+    });
+    max = loops.map(function (x) {
+      return setTo(x);
+    });
+
+    var index = lastLoop;
+
+    while (true) {
+      var response = callback.apply(context || null, numbers);
+      if ((typeof response === 'object') && (response.canSkip)) {
+        index = response.skipIndex;
+        numbers[index]++;
+        for (i = index + 1; i <= lastLoop; i++) {
+          numbers[i] = min[i];
+        }
       } else {
-        max = 9;
+        numbers[index]++;
       }
-    }
 
-    for (var i = 0; i < depth; i++) {
-      numbers[i] = min;
-    }
-
-    var index = depth - 1;
-
-    while(true) {
-      callback.apply(context||null, numbers);
-      numbers[index]++;
-
-      while(numbers[index] === max + 1) {
+      while (numbers[index] === max[index] + 1) {
         if (index === 0) {
           return numbers;
         }
 
-        numbers[index--] = min;
+        numbers[index] = min[index];
+        index--;
         numbers[index]++;
       }
 
-      index = depth - 1;
+      index = lastLoop;
     }
 
   }
@@ -48,7 +65,7 @@
     }
     exports.fors = fors;
   } else if (typeof define === 'function' && define.amd) {
-    define([], function() {
+    define([], function () {
       return fors;
     });
   } else {
