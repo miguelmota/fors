@@ -1,34 +1,47 @@
 (function (root) {
   'use strict';
 
+  var defaultFrom = 0;
+  var defaultTo = 9;
+
+  function normalize(loop) {
+    var result = {
+      from: defaultFrom,
+      to: defaultTo
+    };
+
+    if (Array.isArray(loop)) {
+      result.from = typeof loop[0] === 'number' ? loop[0] : defaultFrom;
+      result.to = typeof loop[1] === 'number' ? loop[1] : defaultTo;
+    } else if (typeof loop === 'object') {
+      result.from = typeof loop.from === 'number' ? loop.from : defaultFrom;
+      result.to = typeof loop.to === 'number' ? loop.to : defaultTo;
+    }
+
+    return result;
+  }
+
+  function setFrom(loop) {
+    return loop.from;
+  }
+
+  function setTo(loop) {
+    return loop.to;
+  }
+
   function fors(loops, callback, context) {
-    var defaultFrom = 0;
-    var defaultTo = 9;
-    var numbers;
-    var min;
-    var max;
+    if (typeof loops === 'number') {
+      loops = '#'.repeat(loops).split('');
+    } else if (!Array.isArray(loops)) {
+      loops = [];
+    }
+
+    loops = loops.map(normalize);
+
     var lastLoop = loops.length - 1;
-    var i;
-
-    var setFrom = function (loop) {
-      var fromUndefined = (typeof loop.from === 'undefined');
-      return fromUndefined ? defaultFrom : loop.from;
-    };
-
-    var setTo = function (loop) {
-      var toUndefined = (typeof loop.to === 'undefined');
-      return toUndefined ? defaultTo : loop.to;
-    };
-
-    min = loops.map(function (x) {
-      return setFrom(x);
-    });
-    numbers = min.map(function (x) {
-      return x;
-    });
-    max = loops.map(function (x) {
-      return setTo(x);
-    });
+    var min = loops.map(setFrom);
+    var numbers = min.slice(0);
+    var max = loops.map(setTo);
 
     var index = lastLoop;
 
@@ -37,7 +50,7 @@
       if ((typeof response === 'object') && (response.canSkip)) {
         index = response.skipIndex;
         numbers[index]++;
-        for (i = index + 1; i <= lastLoop; i++) {
+        for (var i = index + 1; i <= lastLoop; i++) {
           numbers[i] = min[i];
         }
       } else {

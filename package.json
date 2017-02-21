@@ -1,6 +1,6 @@
 {
   "name": "fors",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Conveniently create nested `for` loops.",
   "main": "fors.js",
   "directories": {
