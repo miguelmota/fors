@@ -47,23 +47,19 @@ for (var i = 0; i <= 9; i++) {
 }
 ```
 
-Set a min and max:
+Set a min and max for each loop:
 
 ```javascript
-var depth = 4;
-var min = 2;
-var max = 6;
-
-fors(depth, [min, max], function callback(i, j, k, l);
+fors([[1, 9], [2, 8], [3, 7]], function callback(i, j, k, l) {
   console.log(i, j, k, l);
   /*
-  2 2 2 2
-  2 2 2 3
-  2 2 2 4
+  1 2 3
+  1 2 4
+  1 2 5
   ...
-  6 6 6 4
-  6 6 6 5
-  6 6 6 6
+  9 8 5
+  9 8 6
+  9 8 7
   */
 });
 ```
@@ -71,16 +67,20 @@ fors(depth, [min, max], function callback(i, j, k, l);
 which is the same as doing:
 
 ```javascript
-for (var i = 2; i <= 6; i++) {
-  for (var j = 2; j <= 6; j++) {
-    for (var k = 2; k <= 6; k++) {
-      for (var l = 2; l <= 6; l++) {
-        console.log(i, j, k, l);
-      }
+for (var i = 1; i <= 9; i++) {
+  for (var j = 2; j <= 8; j++) {
+    for (var k = 3; k <= 7; k++) {
+      console.log(i, j, k, l);
     }
   }
 }
 ```
+
+Alternative way using objects for range:
+
+fors([{from: 1, to: 9}, {from: 2, to: 8}, {from: 3, to: 7}], function callback(i, j, k, l) {
+  console.log(i, j, k, l);
+});
 
 # Test
 
