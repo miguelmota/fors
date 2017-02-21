@@ -78,9 +78,11 @@ for (var i = 1; i <= 9; i++) {
 
 Alternative way using objects for range:
 
+```javascript
 fors([{from: 1, to: 9}, {from: 2, to: 8}, {from: 3, to: 7}], function callback(i, j, k, l) {
   console.log(i, j, k, l);
 });
+```
 
 # Test
 
