@@ -74,6 +74,7 @@
       index = lastLoop;
     }
 
+    return true;
   }
 
   if (typeof exports !== 'undefined') {
