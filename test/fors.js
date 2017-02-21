@@ -4,7 +4,34 @@ const fors = require('../fors');
 test('fors', function (t) {
   'use strict';
 
-  t.plan(7);
+  t.plan(8);
+
+  t.test('test junk inputs', function (t) {
+    var values_A = [];
+
+    fors(null, function(i, j, k, l) {
+      values_A.push([i, j, k, l].join(''));
+    });
+
+    t.deepEqual(values_A, []);
+
+    var values_B = [];
+
+    fors(function(i, j, k, l) {
+      values_B.push([i, j, k, l].join(''));
+    });
+
+    t.deepEqual(values_B, []);
+
+    var values_C = [];
+
+    fors('abc', function(i, j, k, l) {
+      values_C.push([i, j, k, l].join(''));
+    });
+
+    t.deepEqual(values_C, []);
+    t.end();
+  });
 
   t.test('number of iterations', function (t) {
     var values_A = [];

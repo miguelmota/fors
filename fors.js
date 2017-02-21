@@ -36,6 +36,10 @@
       loops = [];
     }
 
+    if (!loops.length) {
+      return false;
+    }
+
     loops = loops.map(normalize);
 
     var lastLoop = loops.length - 1;
